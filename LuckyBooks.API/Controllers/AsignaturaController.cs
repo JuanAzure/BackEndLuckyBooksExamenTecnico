@@ -1,4 +1,5 @@
 ﻿using Bussines;
+using Entity.DTO;
 using LoggerServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -14,13 +15,26 @@ namespace LuckyBooks.API.Controllers
         private readonly ILoggerManager _logger;
 
 
-        public AsignaturaController(AsignaturaService asignaturaService , ILoggerManager logger)
+        public AsignaturaController(AsignaturaService asignaturaService, ILoggerManager logger)
         {
             _asignaturaService = asignaturaService;
             _logger = logger;
         }
 
-        [HttpGet("{id}", Name = "asignaturaCreate")]
+        [HttpGet("GetAllAsignatura")]
+        public async Task<IActionResult> GetAllAsignatura()
+        {
+            var result = await _asignaturaService.GetAll();
+            if (result.Count() == 0)
+            {
+                _logger.LogInfo($"No existe registro de Asignatura en la base de datos");
+                return NotFound();
+            }
+            _logger.LogInfo($"{result.Count()}");
+            return Ok(result);
+        }
+
+        [HttpGet("getByIdAsignatura/{id}", Name = "asignaturaCreate")]
         public async Task<IActionResult> GetByIdAsignatura(int id)
         {
 
@@ -35,20 +49,7 @@ namespace LuckyBooks.API.Controllers
 
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllAsignatura()
-        {
-            var result = await _asignaturaService.GetAll();
-            if (result.Count() == 0)
-            {
-                _logger.LogInfo($"No existe registro de Asignatura en la base de datos");
-                return NotFound();
-            }
-            return Ok(result);
-        }
-
-
-        [HttpPost]
+        [HttpPost("createAsignatura")]
         public async Task<IActionResult> CreateAsignatura([FromBody] AsignaturaForCreationDto asignaturaForCreationDto)
         {
             if (asignaturaForCreationDto == null)
@@ -70,7 +71,7 @@ namespace LuckyBooks.API.Controllers
             return CreatedAtRoute("asignaturaCreate", new { id = result.codigoAsignatura }, result);
         }
 
-        [HttpPut]
+        [HttpPut("updateAsignatura")]
         public async Task<IActionResult> UpdateAsignatura([FromBody] AsignaturaForUpdateDto asignaturaForUpdateDto)
         {
             if (asignaturaForUpdateDto == null)
@@ -97,7 +98,7 @@ namespace LuckyBooks.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("deleteAsignatura/{id}")]
         public async Task<IActionResult> DeleteAsignatura(int id)
         {
             var result = await _asignaturaService.GetById(id);
@@ -113,3 +114,4 @@ namespace LuckyBooks.API.Controllers
         }
     }
 }
+

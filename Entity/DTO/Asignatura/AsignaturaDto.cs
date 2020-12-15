@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-namespace Bussines
+﻿namespace Entity.DTO
 {    
-    public class AsignaturaForUpdateDto
+    public class AsignaturaDto
     {
         public int codigoAsignatura { get; set; }
         public string descripcion { get; set; }

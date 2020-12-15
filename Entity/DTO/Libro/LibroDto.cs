@@ -1,4 +1,4 @@
-﻿namespace Bussines
+﻿namespace Entity.DTO
 {    
    public class LibroDto
     {

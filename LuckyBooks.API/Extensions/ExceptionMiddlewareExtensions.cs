@@ -1,5 +1,4 @@
-﻿
-using LoggerServices;
+﻿using LoggerServices;
 using LoggerServices.ErrorModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;

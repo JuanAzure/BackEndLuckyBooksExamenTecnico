@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using Bussines;
 using Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Entity.DTO;
 
 namespace LuckyBooks.API.AutoMapper
 {
@@ -12,7 +8,7 @@ namespace LuckyBooks.API.AutoMapper
     {
         public MappingProfileLibro()
         {
-            //GET: Cliente y ClienteDto 
+            //GET: Libro y LibroDto 
             // A     =====>     //B  
             CreateMap<Libro, LibroDto>()
                 .ForMember(b => b.codigolibro, opt => opt.MapFrom(a => a.id_libro))
@@ -21,7 +17,7 @@ namespace LuckyBooks.API.AutoMapper
                 .ForMember(b => b.stock, opt => opt.MapFrom(a => a.stock));
 
 
-            //POST: Cliente y ClienteDto 
+            //POST: Libro y LibroForCreationDto 
             // A     =====>     //B  
             CreateMap<LibroForCreationDto, Libro>()
                   .ForMember(b => b.id_libro, opt => opt.MapFrom(a => a.codigolibro))
@@ -30,7 +26,7 @@ namespace LuckyBooks.API.AutoMapper
                 .ForMember(b => b.stock, opt => opt.MapFrom(a => a.stock));
 
 
-            //PUT: Cliente y ClienteDto 
+            //PUT: Libro y LibroForUpdateDto 
             // A     =====>     //B  
             CreateMap<LibroForUpdateDto, Libro>()
                   .ForMember(b => b.id_libro, opt => opt.MapFrom(a => a.codigoLibro))

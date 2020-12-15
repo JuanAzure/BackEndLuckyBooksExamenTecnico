@@ -1,4 +1,5 @@
 ﻿using Bussines;
+using Entity.DTO;
 using LoggerServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace LuckyBooks.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{id}", Name = "libroCreate")]
+        [HttpGet("getByIdLibro/{id}", Name = "libroCreate")]
         public async Task<IActionResult> GetByIdLibro(int id)
         {
 
@@ -35,20 +36,20 @@ namespace LuckyBooks.API.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("getAllLibro")]
         public async Task<IActionResult> GetAllLibro()
         {
             var result = await _libroService.GetAll();
             if (result.Count() == 0)
             {
-                _logger.LogInfo($"No existe registro de clientes en la base de datos");
+                _logger.LogInfo($"No existe registro de libros en la base de datos");
                 return NotFound();
             }
             return Ok(result);
         }
 
 
-        [HttpPost]
+        [HttpPost("createLibro")]
         public async Task<IActionResult> CreateLibro([FromBody] LibroForCreationDto libroForCreationDto)
         {
             if (libroForCreationDto == null)
@@ -58,7 +59,7 @@ namespace LuckyBooks.API.Controllers
             }
             if (!ModelState.IsValid)
             {
-                _logger.LogError("Estado de modelo no válido para el objeto EmployeeForCreationDto");
+                _logger.LogError("Estado de modelo no válido para el objeto LibroForCreationDto");
                 return UnprocessableEntity(ModelState);
             }
             var result = await _libroService.Create(libroForCreationDto);
@@ -66,21 +67,22 @@ namespace LuckyBooks.API.Controllers
             {
                 _logger.LogError("El Libro contiene ID = 0");
                 return BadRequest("Error al crear el Libro");
-            }            return CreatedAtRoute("libroCreate", new { id = result.codigolibro }, result);
+            }
+            return CreatedAtRoute("libroCreate", new { id = result.codigolibro }, result);
         }
 
-        [HttpPut]
+        [HttpPut("updateLibro")]
         public async Task<IActionResult> UpdateLibro([FromBody] LibroForUpdateDto libroForUpdateDto)
-        {
+       {
             if (libroForUpdateDto == null)
             {
-                _logger.LogError("Estado de modelo no válido para el objeto clienteForUpdateDto");
+                _logger.LogError("Estado de modelo no válido para el objeto libroForUpdateDto");
                 return BadRequest("No puede enviar un Libro nulo.");
             }
 
             if (!ModelState.IsValid)
             {
-                _logger.LogError("Invalid model state for the clienteForUpdateDto object");
+                _logger.LogError("Invalid model state for the libroForUpdateDto object");
                 return BadRequest(ModelState);
             }
 
@@ -96,7 +98,7 @@ namespace LuckyBooks.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("deleteLibro/{id}")]
         public async Task<IActionResult> DeleteLibro(int id)
         {
             var result = await _libroService.GetById(id);

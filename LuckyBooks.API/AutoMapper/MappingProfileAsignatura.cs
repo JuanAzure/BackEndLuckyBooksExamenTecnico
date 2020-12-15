@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using Bussines;
 using Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Entity.DTO;
 
 namespace LuckyBooks.API.AutoMapper
 {

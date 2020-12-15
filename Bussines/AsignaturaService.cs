@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Data;
 using Entity;
+using Entity.DTO;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
